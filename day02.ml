@@ -30,7 +30,7 @@ let calc_ribbon acc line =
 ;;
 
 let () =
-  let lines = read_lines in
+  let lines = read_lines () in
   let total1 = List.fold_left calc_area 0 lines in
   let total2 = List.fold_left calc_ribbon 0 lines in
   Printf.printf "Solution 1: %d\n" total1;
