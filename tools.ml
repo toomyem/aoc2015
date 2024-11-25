@@ -1,2 +1,9 @@
+let rec read_lines0 acc =
+  try
+    let line = input_line stdin in
+    line :: read_lines0 acc
+  with
+  | End_of_file -> acc
+;;
 
-let hello (name : string) : string = "Hello, " ^ name
+let read_lines = read_lines0 []

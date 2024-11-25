@@ -1,2 +1,1 @@
-val hello : string -> string
-
+val read_lines : string list
