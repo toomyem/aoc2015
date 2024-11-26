@@ -9,8 +9,8 @@ then
 fi
 
 day="$1"
-day_padded=$(printf "%02d" "$day")
-input="day${day_padded}.input"
+day_padded=$(printf "day%02d" "$day")
+input="${day_padded}/${day_padded}.input"
 session="${SESSION:?is not set}"
 
 [[ -f "$input" ]] || wget -O "$input" --header "Cookie: session=$session" "https://adventofcode.com/2015/day/$day/input"
@@ -20,8 +20,10 @@ then
   input="$2"
 fi
 
-ocamlc -c tools.mli
-ocamlc -c tools.ml
-ocamlc -c "day${day_padded}.ml"
-ocamlc -o "day${day_padded}" tools.ml "day${day_padded}".ml
-"./day${day_padded}" < "$input" && rm "day${day_padded}"{,.cmi,.cmo}
+dune build
+if [[ "$input" = "-" ]]
+then
+"_build/default/${day_padded}/${day_padded}.exe"
+else
+"_build/default/${day_padded}/${day_padded}.exe" < "$input"
+fi

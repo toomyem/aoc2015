@@ -23,7 +23,7 @@ let update a c =
 ;;
 
 let () =
-  let line = input_line stdin in
+  let line = read_line () in
   let solution = String.fold_left update t0 line in
   print_endline ("Solution 1: " ^ string_of_int solution.floor);
   print_endline ("Solution 2: " ^ string_of_int solution.first)
