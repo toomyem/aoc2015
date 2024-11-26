@@ -13,6 +13,13 @@ day_padded=$(printf "day%02d" "$day")
 input="${day_padded}/${day_padded}.input"
 session="${SESSION:?is not set}"
 
+if [[ ! -d "${day_padded}" ]]
+then
+  mkdir "${day_padded}"
+  echo -e "(executable\n  (name ${day_padded})\n  (libraries tools))" > "${day_padded}/dune"
+  echo -e "let () = print_endline \"Day: $day\"" > "${day_padded}/${day_padded}.ml"
+fi
+
 [[ -f "$input" ]] || wget -O "$input" --header "Cookie: session=$session" "https://adventofcode.com/2015/day/$day/input"
 
 if [[ "$#" -gt 1 ]]
