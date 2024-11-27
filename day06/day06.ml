@@ -96,6 +96,7 @@ let process cmds ~init ~turn_on ~turn_off ~toggle =
 ;;
 
 let printf = Stdlib.Printf.printf
+let count lights = Map.fold lights ~init:0 ~f:(fun ~key:_ ~data:v acc -> acc + v)
 
 let () =
   let cmds = read_lines () |> List.map ~f:to_cmd in
@@ -103,10 +104,6 @@ let () =
   let lights2 =
     process cmds ~init:empty ~turn_on:turn_on2 ~turn_off:turn_off2 ~toggle:toggle2
   in
-  printf
-    "Solution 1: %d\n"
-    (Map.fold lights1 ~init:0 ~f:(fun ~key:_ ~data:v acc -> acc + v));
-  printf
-    "Solution 2: %d\n"
-    (Map.fold lights2 ~init:0 ~f:(fun ~key:_ ~data:v acc -> acc + v))
+  printf "Solution 1: %d\n" (count lights1);
+  printf "Solution 2: %d\n" (count lights2)
 ;;
