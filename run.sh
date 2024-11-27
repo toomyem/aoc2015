@@ -5,32 +5,38 @@ set -euo pipefail
 if [[ "$#" -eq 0 ]]
 then
   echo "Usage: $0 <day>"
-  exit
+  exit 1
 fi
+
+root=$(pwd)
+while [[ ! -f "$root/dune-project" ]]
+do
+  [[ "$root" = "/" ]] && echo "dune-project not found" && exit 1
+  root=$(dirname "$root")
+done
 
 day="$1"
 day_padded=$(printf "day%02d" "$day")
-input="${day_padded}/${day_padded}.input"
-session="${SESSION:?is not set}"
+input="$root/${day_padded}/main.input"
 
-if [[ ! -d "${day_padded}" ]]
+if [[ ! -d "$root/${day_padded}" ]]
 then
-  mkdir "${day_padded}"
-  echo -e "(executable\n  (name ${day_padded})\n  (libraries tools))" > "${day_padded}/dune"
-  echo -e "let () = print_endline \"Day: $day\"" > "${day_padded}/${day_padded}.ml"
+  mkdir "$root/${day_padded}"
+  echo -e "(executable\n  (name ${day_padded})\n  (libraries tools))" > "$root/${day_padded}/dune"
+  echo -e "let () = print_endline \"Day: $day\"" > "$root/${day_padded}/${day_padded}.ml"
 fi
 
-[[ -f "$input" ]] || wget -O "$input" --header "Cookie: session=$session" "https://adventofcode.com/2015/day/$day/input"
+[[ -f "$input" ]] || wget -O "$input" --header "Cookie: session=${SESSION:?is not set}" "https://adventofcode.com/2015/day/$day/input"
 
 if [[ "$#" -gt 1 ]]
 then
   input="$2"
 fi
 
-dune build
+( cd "$root" && dune build )
 if [[ "$input" = "-" ]]
 then
-"_build/default/${day_padded}/${day_padded}.exe"
+"$root/_build/default/${day_padded}/${day_padded}.exe"
 else
-"_build/default/${day_padded}/${day_padded}.exe" < "$input"
+"$root/_build/default/${day_padded}/${day_padded}.exe" < "$input"
 fi
