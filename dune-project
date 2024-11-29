@@ -17,7 +17,7 @@
  (name aoc2015)
  (synopsis "AOC 2015")
  (description "Solutions for Advent of Code 2015")
- (depends ocaml dune pcre2)
+ (depends ocaml dune pcre2 yojson)
  (allow_empty)
 )
 
