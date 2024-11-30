@@ -1,0 +1,3 @@
+(executable
+  (name day14)
+  (libraries tools base pcre2))
