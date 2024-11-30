@@ -22,8 +22,8 @@ input="$root/${day_padded}/main.input"
 if [[ ! -d "$root/${day_padded}" ]]
 then
   mkdir "$root/${day_padded}"
-  echo -e "(executable\n  (name ${day_padded})\n  (libraries tools))" > "$root/${day_padded}/dune"
-  echo -e "let () = print_endline \"Day: $day\"" > "$root/${day_padded}/${day_padded}.ml"
+  echo -e "(executable\n  (name ${day_padded})\n  (libraries tools base pcre2))" > "$root/${day_padded}/dune"
+  echo -e "let () = Stdlib.Printf.printf \"Solution 1: %s\\\n\" \"Day: $day\"" > "$root/${day_padded}/${day_padded}.ml"
 fi
 
 [[ -f "$input" ]] || wget -O "$input" --header "Cookie: session=${SESSION:?is not set}" "https://adventofcode.com/2015/day/$day/input"
