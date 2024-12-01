@@ -1,19 +1,4 @@
 open Base
-open Tools
-
-let rec permute (l : 'a list) : 'a list list =
-  let insert a l =
-    let len = List.length l in
-    List.range ~stop:`inclusive 0 len
-    |> List.map ~f:(fun i ->
-      List.concat [ List.sub l ~pos:0 ~len:i; [ a ]; List.sub l ~pos:i ~len:(len - i) ])
-  in
-  match l with
-  | [] -> []
-  | hd :: tl ->
-    let p = permute tl in
-    if List.is_empty p then [ [ hd ] ] else p |> List.map ~f:(insert hd) |> List.concat
-;;
 
 let empty = Map.empty (module String)
 let make_key name1 name2 = name1 ^ "-" ^ name2
@@ -48,7 +33,7 @@ let calc_pref map names =
 let calc_max map names =
   names
   |> Set.to_list
-  |> permute
+  |> Tools.permute
   |> List.map ~f:(calc_pref map)
   |> List.max_elt ~compare:Int.compare
   |> Option.value_exn
@@ -68,7 +53,7 @@ let add_myself map names =
 
 let () =
   let map, names =
-    read_lines () |> List.fold ~init:(empty, Set.empty (module String)) ~f:to_person
+    Tools.read_lines () |> List.fold ~init:(empty, Set.empty (module String)) ~f:to_person
   in
   let max1 = calc_max map names in
   let max2 = calc_max (add_myself map names) (Set.add names myself) in
