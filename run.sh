@@ -24,13 +24,12 @@ then
   mkdir "$root/${day_padded}"
   echo -e "(executable\n  (name ${day_padded})\n  (libraries tools base pcre2))" > "$root/${day_padded}/dune"
   cat <<-EOF > "$root/${day_padded}/${day_padded}.ml"
-    open Base
-    open Tools
+open Base
 
-    let () =
-      let lines = read_lines () in
-      let n = List.length lines in
-      Stdlib.Printf.printf "Solution 1: %d\n" n
+let () =
+  let lines = Tools.read_lines () in
+  let n = List.length lines in
+  Stdlib.Printf.printf "Solution 1: %d\n" n
 EOF
 fi
 
