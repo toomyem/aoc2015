@@ -22,7 +22,7 @@ let rec permute (l : 'a list) : 'a list list =
       List.concat [ List.sub l ~pos:0 ~len:i; [ a ]; List.sub l ~pos:i ~len:(len - i) ])
   in
   match l with
-  | [] -> []
+  | [] | [ _ ] -> [ l ]
   | hd :: tl ->
     let p = permute tl in
     if List.is_empty p then [ [ hd ] ] else p |> List.map ~f:(insert hd) |> List.concat
