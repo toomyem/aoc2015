@@ -27,7 +27,6 @@ type cookie =
 
 let to_prop line =
   let arr =
-    Stdlib.Printf.printf "%s\n" line;
     Pcre2.extract
       ~full_match:false
       ~pat:
