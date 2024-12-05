@@ -35,3 +35,7 @@ let rec permute (l : 'a list) : 'a list list =
 ;;
 
 let sum_of_ints lst = List.fold ~init:0 ~f:(fun acc x -> acc + x) lst
+
+let ints_to_string lst =
+  List.fold ~init:"" ~f:(fun acc x -> acc ^ Int.to_string x ^ ",") lst
+;;
