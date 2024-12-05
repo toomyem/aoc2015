@@ -8,10 +8,7 @@ nr=${day/day*(0)}
 exe="../_build/default/$day/main.exe"
 input=puzzle.input
 
-if [[ ! -s "$input" ]] 
-then
-  wget -O "$input" --header "Cookie: session=${SESSION:?is not set}" "https://adventofcode.com/2015/day/$nr/input"
-fi
+[[ -s "$input" ]] || wget -O "$input" --header "Cookie: session=${SESSION:?is not set}" "https://adventofcode.com/2015/day/$nr/input"
 
 [[ "$#" -gt 0 ]] && input="$1"
 

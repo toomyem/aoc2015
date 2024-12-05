@@ -14,6 +14,12 @@ let read_lines () =
   read_lines0 []
 ;;
 
+let to_int_list (line : string) : int list =
+  Pcre2.extract_all ~full_match:false ~pat:"(\\d+)" line
+  |> Array.map ~f:(fun a -> Int.of_string a.(0))
+  |> Array.to_list
+;;
+
 let rec permute (l : 'a list) : 'a list list =
   let insert a l =
     let len = List.length l in
@@ -27,3 +33,5 @@ let rec permute (l : 'a list) : 'a list list =
     let p = permute tl in
     if List.is_empty p then [ [ hd ] ] else p |> List.map ~f:(insert hd) |> List.concat
 ;;
+
+let sum_of_ints lst = List.fold ~init:0 ~f:(fun acc x -> acc + x) lst
