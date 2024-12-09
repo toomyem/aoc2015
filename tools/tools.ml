@@ -15,17 +15,14 @@ let read_lines () =
 ;;
 
 let to_int_list (line : string) : int list =
-  Pcre2.extract_all ~full_match:false ~pat:"(\\d+)" line
-  |> Array.map ~f:(fun a -> Int.of_string a.(0))
-  |> Array.to_list
+  Pcre2.extract_all ~full_match:false ~pat:"(\\d+)" line |> Array.map ~f:(fun a -> Int.of_string a.(0)) |> Array.to_list
 ;;
 
 let rec permute (l : 'a list) : 'a list list =
   let insert a l =
     let len = List.length l in
     List.range ~stop:`inclusive 0 len
-    |> List.map ~f:(fun i ->
-      List.concat [ List.sub l ~pos:0 ~len:i; [ a ]; List.sub l ~pos:i ~len:(len - i) ])
+    |> List.map ~f:(fun i -> List.concat [ List.sub l ~pos:0 ~len:i; [ a ]; List.sub l ~pos:i ~len:(len - i) ])
   in
   match l with
   | [] | [ _ ] -> [ l ]
@@ -37,5 +34,5 @@ let rec permute (l : 'a list) : 'a list list =
 let sum_of_ints lst = List.fold ~init:0 ~f:(fun acc x -> acc + x) lst
 
 let ints_to_string lst =
-  List.fold ~init:"" ~f:(fun acc x -> acc ^ Int.to_string x ^ ",") lst
+  List.fold ~init:"" ~f:(fun acc x -> acc ^ Int.to_string x ^ ",") lst |> String.chop_suffix_if_exists ~suffix:","
 ;;
